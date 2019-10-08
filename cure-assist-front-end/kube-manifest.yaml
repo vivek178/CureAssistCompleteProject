@@ -1,0 +1,353 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      app: cureassist-frontend
+      kompose.cmd: kompose convert -f docker-compose.yml -o kube-manifest.yaml
+      kompose.version: 1.18.0 (06a2e56)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: cureassist-frontend
+    name: cureassist-frontend
+  spec:
+    type: NodePort
+    ports:
+    - name: "4600"
+      port: 4600
+      targetPort: 80
+    selector:
+      io.kompose.service: cureassist-frontend
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      app: cureassist-frontend
+      kompose.cmd: kompose convert -f docker-compose.yml -o kube-manifest.yaml
+      kompose.version: 1.18.0 (06a2e56)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: cureassist-frontend
+    name: cureassist-frontend
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: cureassist-frontend
+      spec:
+        containers:
+        - image: teamcureassist/cureassist-frontend:<VERSION>
+          name: cureassist-frontend
+          ports:
+          - containerPort: 80
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    name: cureassist-frontend-ingress
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+  spec:
+    rules:
+    - host: onboarding.cureassist.cgi-wave7.stackroute.io
+      http:
+        paths:
+        - path: /(assets.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(onboarding.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(polyfills-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(favicon.ico)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(styles-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(runtime-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(vendor-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(main-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(O4YIN80.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(16414.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(illustration.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+    - host: patient.cureassist.cgi-wave7.stackroute.io
+      http:
+        paths:
+        - path: /(assets.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(onboarding/.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(patient)/(.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(polyfills-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(favicon.ico)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(styles-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(runtime-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(vendor-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(main-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(O4YIN80.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(16414.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(illustration.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+    - host: medicalrecords.cureassit.cgi-wave7.stackroute.io
+      http:
+        paths:
+        - path: /(medicalrecordds)/(.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(polyfills-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(favicon.ico)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(styles-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(runtime-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(vendor-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(main-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(O4YIN80.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(16414.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(illustration.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+    - host: dc.cureassist.cgi-wave7.stackroute.io
+      http:
+        paths:
+        - path: /(assets.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(onboarding.*)
+          backend: 
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(diagnosisCenter)/(.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(polyfills-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(favicon.ico)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(styles-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(runtime-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(vendor-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(main-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(O4YIN80.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(16414.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(illustration.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+    - host: doctor.cureassist.cgi-wave7.stackroute.io
+      http:
+        paths:
+        - path: /(assets.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(onboarding.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(doctor)/(.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(polyfills-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(favicon.ico)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(styles-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(runtime-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(vendor-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(main-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(O4YIN80.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(16414.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(illustration.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+    - host: pharmacy.cureassist.cgi-wave7.stackroute.io
+      http:
+        paths:
+        - path: /(assets.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(onboarding.*)
+          backend: 
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(pharmacy)/(.*)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(polyfills-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(favicon.ico)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(styles-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(runtime-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(vendor-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(main-es2015.js)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(O4YIN80.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(16414.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+        - path: /(illustration.jpg)
+          backend:
+            serviceName: cureassist-frontend
+            servicePort: 80
+kind: List
+metadata: {}

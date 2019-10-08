@@ -1,0 +1,121 @@
+apiVersion: v1
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+          convert -f docker-compose.yml -o kube-manifest.yaml
+        kompose.version: 1.18.0 (06a2e56)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: test-reports-backend
+      name: test-reports-backend
+    spec:
+      ports:
+      - name: "5004"
+        port: 5004
+        targetPort: 80
+      selector:
+        io.kompose.service: test-reports-backend
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+          convert -f docker-compose.yml -o kube-manifest.yaml
+        kompose.version: 1.18.0 (06a2e56)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: test-reports-db
+      name: test-reports-db
+    spec:
+      ports:
+      - name: "27017"
+        port: 27017
+        targetPort: 27017
+      selector:
+        io.kompose.service: test-reports-db
+    status:
+      loadBalancer: {}
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+          convert -f docker-compose.yml -o kube-manifest.yaml
+        kompose.version: 1.18.0 (06a2e56)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: test-reports-backend
+      name: test-reports-backend
+    spec:
+      replicas: 1
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            io.kompose.service: test-reports-backend
+        spec:
+          containers:
+          - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Production
+            - name: MONGODB_HOST
+              value: mongodb://test-reports-db:27017
+            image: teamcureassist/test-reports-backend:<VERSION>
+            name: test-reports-backend
+            ports:
+            - containerPort: 80
+            resources: {}
+          restartPolicy: Always
+    status: {}
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+          convert -f docker-compose.yml -o kube-manifest.yaml
+        kompose.version: 1.18.0 (06a2e56)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: test-reports-db
+      name: test-reports-db
+    spec:
+      replicas: 1
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            io.kompose.service: test-reports-db
+        spec:
+          containers:
+          - image: mvertes/alpine-mongo
+            name: test-reports-db
+            ports:
+            - containerPort: 27017
+            resources: {}
+          restartPolicy: Always
+    status: {}
+  - apiVersion: extensions/v1beta1
+    kind: Ingress
+    metadata:
+      name: test-reports-api-ingress
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+    spec:
+      rules:
+        - host: test-reports-api.cureassist.cgi-wave7.stackroute.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: test-reports-backend
+                servicePort: 80
+kind: List
+metadata: {}
+

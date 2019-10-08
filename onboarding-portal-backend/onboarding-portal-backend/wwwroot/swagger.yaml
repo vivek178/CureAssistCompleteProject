@@ -1,0 +1,106 @@
+﻿swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "User Database"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "User.swagger.io"
+basePath: "/v2"
+tags:
+- name: "User"
+  description: "Gives access to user database "
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /register:
+    post:
+      tags:
+      - "User"
+      summary: "Adds a new user to the database"
+      operationId: "Add_User"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Accepts emailId and usertype only"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "Ok"
+        409:
+          description: "User Already Exists"  
+  /login:  
+    post:
+      tags:
+      - "User"
+      summary: "Login for an existing user"
+      description: ""
+      operationId: "Login_User"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Accepts emailId,password and usertype for signing in"
+        required: true
+        schema:
+          $ref: "#/definitions/User"  
+      responses:
+        200:
+          description: "Ok"
+        401:
+          description: "Unauthorized Request"
+  /setpassword:  
+    post:
+      tags:
+      - "User"
+      summary: "Setting up password for the new user"
+      description: ""
+      operationId: "Setpassword"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Accepts emailId,password and userId for setting up new password"
+        required: true
+        schema:
+          $ref: "#/definitions/User"  
+      responses:
+        200:
+          description: "Ok"
+        401:
+          description: "Unauthorized Request"          
+definitions:
+  User:
+    type: "object"
+    properties:
+      userId:
+        type: "string"
+      usertype:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

@@ -1,0 +1,20 @@
+<div class="mat-elevation-z2" >
+<div class="header-container">
+<h5> <b>Confirmed orders!</b> </h5>
+</div>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let orderdetail of confirmOrdersDetails">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+               <p>  Customer Name: {{orderdetail.patientName}} </p>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>Phone Number: {{orderdetail.patientPhoneNumber}}</p>
+        <p>Address: {{orderdetail.currentLocation}}</p>
+        <div *ngFor="let prescribedMedicine of orderdetail.prescribedMedicines">
+            <p>Medicine Name: {{prescribedMedicine.medicineName}}</p>
+            <p>Prescribed Dose: {{prescribedMedicine.prescribedDosage}}</p>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
+</div>

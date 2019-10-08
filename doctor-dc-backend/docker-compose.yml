@@ -1,0 +1,16 @@
+version: "3"
+services:
+  doctor-dc-backend:
+    build: .
+    image: teamcureassist/doctor-dc-portal-backend
+    ports:
+      - "5002:80"
+    depends_on:
+      - doctor-dc-backend-db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      MONGODB_HOST: mongodb://doctor-dc-backend-db:27017
+  doctor-dc-backend-db:
+    image: mvertes/alpine-mongo
+    ports:
+      - "27017:27017"

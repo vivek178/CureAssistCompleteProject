@@ -1,0 +1,132 @@
+<app-navbar></app-navbar>
+<h4>Prescriptions</h4>
+    <mat-accordion class="prescription-accordion" *ngFor="let prescribed of prescription">
+        <mat-expansion-panel class="panel">
+            <mat-expansion-panel-header class="test">
+                <mat-panel-title>
+                 <b>{{prescribed.prescriptionDate | date: 'dd/MM/yyyy'}}</b>
+                </mat-panel-title>
+                <mat-panel-title>
+                  <b>{{prescribed.doctorName}}</b>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="mat-listcontainer">
+                <div class="maincontainer">
+                    <div class="firstcontainer">
+                        Symptoms: {{prescribed.symptoms}}
+                    </div>
+                    <div class="lastcontainer">
+                        Remarks: {{prescribed.remarks}}
+                    </div>
+                    <div class="lastcontainer">
+                        Tests: {{prescribed.suggestedTests}}
+                    </div>
+                </div>
+                <hr>
+                <!-- <div class="list-container">
+                    <mat-list role="list" *ngFor="let medicine of prescribed.allPrescribedMedicines">
+                        <mat-list-item role="listitem">
+                            <div class="flexcontent">
+                            <div class="first">
+                                <mat-checkbox #checkbox="matCheckbox"
+                                    (change)="pushMeds(medicine); prescribed.selectedMeds.push(medicine)"
+                                    [checked]="medicine.medicineName.selected">
+                                   <b>Medicine Name :</b> {{medicine.medicineName}}
+                                </mat-checkbox>
+                            </div>
+                            <div class="second">
+                            <b> Prescribed Dosage: </b>{{medicine.prescribedDosage}}
+                            </div>
+                            <div class="third">
+                              <b>Prescribed Days : </b> {{medicine.prescribedDays}}
+                            </div>
+                            <div class="fourth">
+                                 <b>Prescribed Timings : </b>
+                                  <div class="medicine" *ngFor="let item of medicine.prescribedTimings">
+                                        <div class="morning" *ngIf="item == 'Morning'">
+                                            <mat-icon>brightness_5</mat-icon>
+                                            
+                                        </div>
+                                        <div class="afternoon" *ngIf="item == 'afternoon'">
+                                            <mat-icon>brightness_4</mat-icon>
+                                        </div>
+                                        <div class="evening" *ngIf="item == 'evening'">
+                                            <mat-icon>brightness_3</mat-icon>
+                                        </div>
+                                      </div>
+                            </div>
+                            </div>
+                        </mat-list-item>
+                        <br>
+                    </mat-list>
+                    <button mat-raised-button color="primary" (click)="openDialog(prescribed)">Buy
+                        Now</button>
+
+                </div> -->
+
+                <div class="appointments-container">
+                    <mat-table class="appointments" [dataSource]="prescribed.allPrescribedMedicines">
+                      <ng-container cdkColumnDef="Medicine Name">
+                        <mat-header-cell *cdkHeaderCellDef>Name</mat-header-cell>
+                        <mat-cell *cdkCellDef="let medicine"><mat-checkbox #checkbox="matCheckbox"
+                            (change)="pushMeds(medicine); prescribed.selectedMeds.push(medicine)"
+                            [checked]="medicine.medicineName.selected">
+                           {{medicine.medicineName}}
+                        </mat-checkbox></mat-cell>
+                      </ng-container>
+                      <ng-container cdkColumnDef="Prescribed Dosage">
+                        <mat-header-cell *cdkHeaderCellDef>Prescribed Dosage</mat-header-cell>
+                        <mat-cell *cdkCellDef="let medicine">{{medicine.prescribedDosage}}</mat-cell>
+                      </ng-container>
+                      <ng-container cdkColumnDef="Prescribed Days">
+                        <mat-header-cell *cdkHeaderCellDef>Prescribed Days</mat-header-cell>
+                        <mat-cell *cdkCellDef="let medicine">{{medicine.prescribedDays}}</mat-cell>
+                      </ng-container>
+                      <ng-container cdkColumnDef="Prescribed Timings">
+                        <mat-header-cell *cdkHeaderCellDef>Prescribed Timings</mat-header-cell>
+                        <mat-cell *cdkCellDef="let medicine">{{medicine.prescribedTimings}}</mat-cell>
+                      </ng-container>
+                      <mat-header-row *cdkHeaderRowDef="['Medicine Name','Prescribed Dosage','Prescribed Days','Prescribed Timings']"></mat-header-row>
+                      <mat-row *cdkRowDef="let medicine; columns: ['Medicine Name','Prescribed Dosage','Prescribed Days','Prescribed Timings']"></mat-row>
+                    </mat-table>
+                    <br>
+                    <div class="buynow">
+                        <button mat-raised-button color="primary" (click)="openDialog(prescribed)">Buy
+                        Now</button>
+                    </div>
+                  </div>
+        </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+<!-- <mat-accordion class="prescription-accordion" *ngFor="let prescribed of prescription">
+    <mat-expansion-panel class="panel">
+        <mat-expansion-panel-header class="test">
+            <mat-panel-title>
+                 {{prescribed.prescriptionDate | date: 'dd/MM/yyyy'}}
+            </mat-panel-title>
+            <mat-panel-title>
+                  {{prescribed.symptoms}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="maincontainer">
+            <div class="lastcontainer">
+                {{prescribed.doctorName}}
+            </div>
+        </div>
+        <mat-selection-list #shoes>
+            <mat-list-option *ngFor="let medicine of prescribed.allPrescribedMedicines"> 
+               Medicine Name: {{medicine.medicineName}}&nbsp;
+               Prescribed Dosage: {{medicine.prescribedDosage}}&nbsp;
+               Prescribed Timings: {{medicine.prescribedTimings}}&nbsp;
+               Prescribed Days: {{medicine.prescribedDays}}&nbsp;
+            </mat-list-option>
+          </mat-selection-list>
+          
+          <p>
+            Options selected: {{shoes.selectedOptions.selected.length}}
+          </p>
+    </mat-expansion-panel>
+</mat-accordion> -->

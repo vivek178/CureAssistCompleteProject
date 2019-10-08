@@ -1,0 +1,22 @@
+<mat-dialog-content>
+        <div *ngFor="let item of data.prescription.selectedMeds">
+        {{item.medicineName}}
+        <mat-form-field>
+            <input [(ngModel)]="item.prescribedDays" (keyup)="addquantity(item.prescribedDays, item.medicineName)" matInput
+                placeholder="Enter Quantity">
+        </mat-form-field>
+    </div>
+    <mat-form-field>
+        <input [(ngModel)]="location" (keyup)="addlocation(location)" matInput placeholder="Enter Address">
+    </mat-form-field>
+    <mat-form-field>
+            <input [(ngModel)]="pincode" (keyup)="addpincode(pincode)" matInput placeholder="Enter pincode">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div *ngIf="orderQuotation.totalCost">
+        Your Order is Confirmed. Please Pay Rs. {{orderQuotation?.totalCost}}
+    </div>
+    <button class="mat-raised-button" (click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary" (click)="save()" (click)= setTimer()>Save</button>
+</mat-dialog-actions>

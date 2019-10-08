@@ -1,0 +1,85 @@
+<div mat-dialog-title>Update Profile</div>
+<div mat-dialog-content class="profile-details">
+
+  <form [formGroup]="doctorProfile">
+    <mat-card-subtitle>
+      Basic Details
+    </mat-card-subtitle>
+    <div style="display: flex; flex-flow: row wrap; align-items: center; width:
+      100%;">
+      <mat-form-field>
+        <input matInput formControlName="doctorFirstName" placeholder="First
+          Name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput formControlName="doctorLastName" placeholder="Last
+          Name">
+      </mat-form-field>
+    </div>
+    <div style="display: flex; flex-flow: row wrap; align-items: center;">
+      <mat-form-field>
+        <input matInput formControlName="doctorPhoneNumber" placeholder="Phone
+          Number">
+      </mat-form-field>
+    </div>
+    <div style="display: flex; flex-flow: row wrap; align-items: center;">
+      <mat-form-field style="width: 100%;">
+        <input matInput formControlName="doctorEmail" placeholder="Email">
+      </mat-form-field>
+    </div>
+    <div style="display: flex; flex-flow: row wrap; align-items: center;">
+      <mat-form-field>
+        <input matInput formControlName="doctorRegNum" placeholder="Registration
+          Number">
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div class="profile-details">
+  <mat-card-subtitle>
+    Address
+  </mat-card-subtitle>
+  <form [formGroup]="doctorProfile">
+    <div>
+      <mat-form-field style="width: 100%;">
+        <textarea matInput formControlName="doctorAddress" placeholder="Address
+          Line"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput formControlName="doctorCity" placeholder="City">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput formControlName="doctorExperience" placeholder="doctorExperience">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input type='text' matInput formControlName="pincode" placeholder="Pincode">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input matInput formControlName="doctorSpecialization" placeholder="Specialization" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let specialization of filteredSpecialization | async" [value]="specialization">
+            {{specialization}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div class="profile-options" mat-dialog-actions>
+  <button mat-stroked-button color="primary" (click)="goToManageSlots()"> Update
+    Time Slots </button>
+  <button mat-stroked-button color="primary" (click)="saveProfile()"> Save
+    Profile </button>
+</div>

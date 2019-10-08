@@ -1,0 +1,11 @@
+<h5>Appointment Confirmation</h5>
+<h6 mat-dialog-title>Date : {{data.Date | date}}</h6>
+<h6 mat-dialog-title>Time : {{data.StartTime}}</h6>
+<!-- <h2 mat-dialog-title>Appointment end time : {{data.EndTime}}</h2> -->
+<div mat-dialog-content>
+    <p>Do you want to confim your booking</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Not Now</button>
+    <button mat-button (click)="confirmAppointment(data.Date,data.StartTime,data.EndTime, data.DoctorId,data.symptoms)">Ok</button>
+</div>

@@ -1,0 +1,24 @@
+version: "3.0"
+services:
+  pharmacy-portal-backend:
+    image: teamcureassist/pharmacy-portal-backend
+    build: .
+    ports:
+      - "5005:80"
+    depends_on:
+      - pharmacy-portal-backend-db
+      - mongodb
+    environment:
+      mongodb: mongodb://mongodb:27017
+      sql_server: "server=pharmacy-portal-backend-db;database=pharmacyDatabase;User Id=sa;Password=Password123;"
+  pharmacy-portal-backend-db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Password123"
+    ports:
+      - "1433:1433"
+  mongodb:
+    image: mvertes/alpine-mongo
+    ports:
+      - "27017:27017"

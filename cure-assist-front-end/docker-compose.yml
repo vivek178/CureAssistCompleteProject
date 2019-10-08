@@ -1,0 +1,9 @@
+version: "3"
+services:
+  cureassist-frontend:
+    image: teamcureassist/cureassist-frontend
+    build: .
+    labels:
+      app: cureassist-frontend
+    ports:
+      - "4600:80"

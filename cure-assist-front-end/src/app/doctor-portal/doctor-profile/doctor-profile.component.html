@@ -1,0 +1,30 @@
+<div class="mat-elevation-z2 name-container" *ngIf="detailType == 'name'">
+    <div class="name-card-bg"></div>
+    <div class="name-card-content">
+        <ngx-avatar size="120" name="{{ doctor.doctorFirstName | titlecase }} {{ doctor.doctorLastName | titlecase }}"></ngx-avatar>
+        <h2>Dr. {{ doctor.doctorFirstName | titlecase }} {{ doctor.doctorLastName | titlecase }}</h2>
+        <p style="margin-bottom: 0%">{{ doctor.doctorSpecialization }}</p>
+        <star-rating [value]="rating" checkedcolor="red" uncheckedcolor="black" size="20px"></star-rating>
+    </div>
+</div>
+
+<div class="mat-elevation-z2 personal-information" *ngIf="detailType == 'personalInformation'">
+    <p class="title">Personal Information</p>
+    <mat-card-content>
+        <p>{{ doctor.doctorEmail }} </p>
+        <p>{{ doctor.doctorRegNum }} </p>
+        <p>{{ doctor.doctorPhoneNumber }}</p>
+         <p>{{doctor.doctorExperience}}</p> 
+    </mat-card-content>
+    <button mat-button (click)="goToUpdateProfile()">  Update Profile</button>
+</div>
+
+<mat-card class="mat-elevation-z2" *ngIf="detailType == 'address'">
+    <p class="title">Address</p>
+    <mat-card-content>
+        <address>{{ doctor.doctorAddress }}</address>
+        <p> {{ doctor.doctorCity }} </p>
+        <address>{{ doctor.pincode }}</address>
+    </mat-card-content>
+    <button mat-button (click)="goToUpdateProfile()">  Update Profile</button>
+</mat-card>

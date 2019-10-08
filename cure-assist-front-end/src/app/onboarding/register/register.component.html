@@ -1,0 +1,17 @@
+<app-onboarding-homepage></app-onboarding-homepage>
+<div class="register-container">
+    <div class="register-container-hero-image"></div>
+    <form class="register-form-container">
+        <mat-form-field>
+            <input matInput placeholder="username" [(ngModel)]="emailId" name="emailId" required>
+        </mat-form-field>
+        <div class="error-status" *ngIf="errorStatus==409">
+            <p>User Already Exists.Invalid Access</p>
+        </div>
+        <div class="error-status" *ngIf="errorStatus==500">
+            <p>PLease Enter Valid Email ID</p>
+        </div>
+        <button mat-raised-button class="register" (click)="CreateUser()">Register</button>
+        
+    </form>
+</div>

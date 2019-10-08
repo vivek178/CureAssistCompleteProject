@@ -1,0 +1,16 @@
+version: '3'
+services:
+  prescription-backend:
+    image: teamcureassist/prescription-backend
+    build: .
+    ports:
+     - "5003:80"
+    depends_on:
+     - prescription-backend-db
+    environment:
+      MongoConnectionString_db: "mongodb://mongodb:27017"
+  prescription-backend-db:
+    image: mvertes/alpine-mongo
+    ports:
+      - 27017:27017
+  

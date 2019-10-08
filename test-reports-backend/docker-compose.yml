@@ -1,0 +1,16 @@
+version: "3"
+services:
+  test-reports-backend:
+    build: .
+    image: teamcureassist/test-reports-backend
+    ports:
+      - "5004:80"
+    depends_on:
+      - test-reports-db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      MONGODB_HOST: mongodb://test-reports-db:27017
+  test-reports-db:
+    image: mvertes/alpine-mongo
+    ports:
+      - "27017:27017"

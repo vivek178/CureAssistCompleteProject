@@ -1,0 +1,27 @@
+<div class="mat-elevation-z2 time-slot-container">
+  <div class="title">Time Slots</div>
+  <div *ngIf="!timeSlotsExist">
+    <div>
+      <h5>Please add your preferred time slots to get your appointments booked</h5>
+      <button mat-button (click)="addNewTimeSlot()" color="primary"> Add TimeSlot</button>
+    </div>
+  </div>
+
+  <div class="time-slot-wrapper" *ngIf="timeSlotsExist">
+    <div *ngFor="let slot of timeSlots">
+      <mat-divider></mat-divider>
+      <div>
+        <span>{{ slot.slotStartTime }} - {{ slot.slotEndTime }}</span>
+        <span>
+          <button mat-button
+          (click)="getSpecificTimeSlot(slot.doctorId,slot.slotId)"
+          color="primary"> Update Time
+          Slot </button>
+        </span>
+      </div>
+      <mat-divider></mat-divider>
+  </div>
+  <button mat-button (click)="addNewTimeSlot()" color="primary"> Add New</button>
+  <div>
+  </div>
+</div>

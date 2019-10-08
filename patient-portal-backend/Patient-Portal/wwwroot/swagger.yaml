@@ -1,0 +1,329 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Patient Database
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: patient.swagger.io
+basePath: /v2
+tags:
+  - name: Patient
+    description: 'Gives access to patient database '
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+schemes:
+  - https
+  - http
+paths:
+  /GET/patient/profile/view/emailid:
+    get:
+      tags:
+        - Patient
+      summary: View patient Profile
+      operationId: Retrieve_Patient
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+         - name: EmailId
+          in: header
+          required: true
+          type: string
+        - name: EmailId
+          in: path
+          description: EmailId to get
+          required: true
+          type: string
+          schema:
+            $ref: '#/definitions/Patient'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+        '405':
+          description: Invalid Input
+  /POST/patient/profile/add:
+    post:
+      tags:
+        - Patient
+      summary: Add patient profile to the database
+      operationId: Add_Patient
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: New Patient is added to the database
+          required: true
+          schema:
+            $ref: '#/definitions/Patient'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+        '405':
+          description: Invalid Input
+  /PUT/patient/profile/emailid:
+    put:
+      tags:
+        - Patient
+      summary: Update an existing patient profile
+      description: ''
+      operationId: Update_Patient
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Patient needs to be updated to the database
+          required: true
+          schema:
+            $ref: '#/definitions/Patient'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+        '405':
+          description: Invalid Input
+  /patient/ViewRecords:
+    get:
+      tags:
+        - Medical_Records
+      summary: view an Medical_Records patient
+      description: ''
+      operationId: Medical_Records
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Patient needs to view the medical records
+          required: true
+          schema:
+            $ref: '#/definitions/Record'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Patient not found
+        '405':
+          description: Validation exception
+  /patient/ViewAppointments:
+    get:
+      tags:
+        - Appointments
+      summary: view an appointments
+      description: ''
+      operationId: Appointments
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Patient needs to view an appointments
+          required: true
+          schema:
+            $ref: '#/definitions/Appointments'
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Patient not found
+        '405':
+          description: Validation exception
+  /patient/city/doctorNameorsymptoms:
+    get:
+      tags:
+        - Appointments
+      summary: search an doctor for appointment
+      description: ''
+      operationId: search Appointments
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: doctorName
+          description: Patient can search an doctor for appointment
+          required: true
+          schema:
+            $ref: '#/definitions/Appointments'
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Patient not found
+        '405':
+          description: Validation exception
+  /patient/city/diagnosticNameortestName:
+    get:
+      tags:
+        - Appointments
+      summary: search an doctor for appointment
+      description: ''
+      operationId: search diagnostic Appointments
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: doctorName
+          description: Patient can search an doctor for appointment
+          required: true
+          schema:
+            $ref: '#/definitions/Appointments'
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Patient not found
+        '405':
+          description: Validation exception
+definitions:
+  Patient:
+    type: object
+    properties:
+      FirstName:
+        type: string
+      LastName:
+        type: string
+      DateOfBirth:
+        type: string
+      BloodGroup:
+        type: string
+      UAID:
+        type: string
+      Email:
+        type: string
+      PhoneNumber:
+        type: integer
+        format: int64
+      EmergencyContactNumber:
+        type: integer
+        format: int64
+      Gender:
+        type: string
+      city:
+        type: string
+    xml:
+      name: Patient
+  Record:
+    type: object
+    properties:
+      prescriptions:
+        type: array
+        xml:
+          name: Patient
+          wrapped: true
+        items:
+          $ref: '#/definitions/Prescription'
+      testReports:
+        type: array
+        xml:
+          name: Record
+          wrapped: true
+        items:
+          $ref: '#/definitions/TestReports'
+  Prescription:
+    type: object
+    properties:
+      remarks:
+        type: array
+        xml:
+          name: Patient
+          wrapped: true
+        items:
+          $ref: '#/definitions/Remark'
+      symptoms:
+        type: array
+        xml:
+          name: Patient
+          wrapped: true
+        items:
+          $ref: '#/definitions/Symptom'
+      medicines:
+        type: array
+        xml:
+          name: Patient
+          wrapped: true
+        items:
+          $ref: '#/definitions/Medicine'
+      suggestedTests:
+        type: array
+        xml:
+          name: Patient
+          wrapped: true
+        items:
+          $ref: '#/definitions/SuggestedTest'
+  Remark:
+    type: string
+  Symptom:
+    type: string
+  Medicine:
+    type: string
+  SuggestedTest:
+    type: string
+  Appointments:
+    type: array
+    xml:
+      name: Patient
+      wrapped: true
+    items:
+      $ref: '#/definitions/Appointment'
+  TestReports:
+    type: string
+  Appointment:
+    type: object
+    properties:
+      DorctorName:
+        type: string
+      Date:
+        type: string
+      TimeSlot:
+        type: string
+      ClinicAddress:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'

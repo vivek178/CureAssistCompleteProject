@@ -1,0 +1,29 @@
+version: '3'
+services:
+  onboarding-microservice-backend:
+    image: teamcureassist/onboarding-microservice-backend
+    build: .
+    ports:
+      - "5000:80"
+    labels:
+      app: onboarding-microservice-backend
+    depends_on:
+      - onboarding-microservice-db
+    environment:
+      sql_server: "server=onboarding-microservice-db;database=DatabasePatient;User Id=sa;Password=Qwerty@123456;"
+      ASPNETCORE_ENVIRONMENT: Production
+      ONBOARDING_URL: onboarding-api.cureassist.cgi-wave7.stackroute.io
+  onboarding-microservice-db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Qwerty@123456"
+    labels:
+      app: onboarding-microservice-db
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldb-vol:/var/opt/mssql
+volumes:
+   sqldb-vol:
+   

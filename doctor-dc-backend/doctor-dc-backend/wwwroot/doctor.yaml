@@ -1,0 +1,202 @@
+swagger: "2.0"
+info:
+  description: "This is the API documentation for the Doctor Server and Diagnostic Server."
+  version: "1.0.0"
+  title: "Swagger Doctors and Diagnosis Center"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    
+basePath: "/v2"
+tags:
+- name: "doctor"
+  description: "All CRUD Operations on Doctors DB"
+schemes:
+- "https"
+- "http"
+paths:
+  /doctors:
+    get:
+      tags:
+      - "doctor"
+      summary: "Gets All Doctors in the DataBase"
+      description: ""
+      operationId: "getAllDoctors"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        404:
+          description: "No Resources Found"
+    post:
+      tags:
+      - "doctor"
+      summary: "Add a new Doctor to the DB"
+      description: ""
+      operationId: "addDoctor"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "A New Doctor is added to the DB from here"
+        required: true
+        schema:
+          $ref: "#/definitions/Doctor"
+      responses:
+        405:
+          description: "Invalid input"
+  /doctors/{doctorId}:
+    get:
+      tags:
+      - "doctor"
+      summary: "Get Doctor with doctorId in the DataBase"
+      description: ""
+      operationId: "getDoctorById"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "doctorId"
+        in: "path"
+        description: "An Existing Doctor is updated in the DB from here"
+        required: true
+        type: "string"
+      responses:
+        404:
+          description: "No Resources Found"
+    put:
+      tags: 
+      - "doctor"
+      summary: "Update profile of the Doctor in the DB"
+      description: ""
+      operationId: "updateDoctorById"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "doctorId"
+        in: "path"
+        description: "An Existing Doctor is updated in the DB from here"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Doctor with given doctorRegNum not found"
+    delete:
+      tags:
+      - "doctor"
+      summary: "Delete a Doctor profile with doctorId"
+      operationId: "deleteDoctorById"
+      description: ""
+      parameters:
+      - name: "doctorId"
+        in: "path"
+        description: "An Existing Doctor is updated in the DB from here"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: OK
+  /doctors/search:
+    get:
+      tags:
+      - "doctor"
+      summary: "Get Doctors by Name and specialization"
+      description: ""
+      operationId: "SearchDoctors"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "specialization"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "city"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        404:
+          description: "No Resources Found"
+  
+
+definitions:
+
+  Doctor:
+    type: "object"
+    properties:
+      doctorId:
+        type: "string"
+      doctorFirstName:
+        type: "string"
+      doctorLastName:
+        type: "string"
+      doctorEmail:
+        type: "string"
+      doctorPhoneNumber:
+        type: "string"
+      doctorRegNum:
+        type: "string"
+      doctorSpecialization:
+        type: "string"
+      doctorExperience:
+        type: "number"
+      doctorCity:
+        type: "string"
+      doctorAddress:
+        type: "string"
+      pincode:
+        type: "string"
+      timeSlots:
+        type: "array"
+        items:
+          $ref: '#/definitions/Time-Slot'
+    xml:
+      name: "Doctor"
+      
+  Time-Slot:
+    type: "object"
+    properties:
+      slotId:
+        type: "integer"
+      slotDate:
+         type: "string"
+      slotStartTime:
+        type: "string"
+        description: "Date Time"
+      slotEndTime:
+        type: "string"
+        description: "Date Time"
+      slotCapacity:
+        type: "integer"
+        description: "No.of patients a doctor can take in one slot"
+    xml:
+      name: "Time Slot"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

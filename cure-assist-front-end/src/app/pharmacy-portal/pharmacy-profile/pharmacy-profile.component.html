@@ -1,0 +1,37 @@
+<mat-toolbar class="homePage" color="primary">
+  <button mat-button (click)=gotohome()> CureAssist </button>
+  <span class="gotoend"></span>
+<button class="Profile" mat-menu-item (click)=logout()>Logout</button>
+</mat-toolbar>
+
+<div class="profileContent">
+    <div class="pharmacy-profile-illustration"></div>
+    <form class="pharmacy-profile-form-container" [formGroup]="service.formModel" (submit)="onsubmit()"><br>
+        <h3> Create Profile </h3>
+        <mat-form-field class="form-group" class="full-width">
+            <mat-label>Pharmacy Name</mat-label>
+            <input matInput class="form-control" formControlName="pharmacyName" name="pname" required>
+        </mat-form-field><br>
+        <mat-form-field class="form-group" class="full-width">
+            <mat-label>Pharmacy Register Number</mat-label>
+            <input matInput class="form-control" formControlName="pharmacyRegisterNumber" name="prnumber" required>
+        </mat-form-field><br>
+        <mat-form-field class="form-group" class="full-width">
+            <mat-label>Pharmacy Location</mat-label>
+            <input matInput class="form-control" formControlName="pharmacyLocation" name="plocation" required>
+        </mat-form-field><br>
+        <mat-form-field class="form-group" class="full-width">
+            <mat-label>Pharmacy Pincode</mat-label>
+            <input matInput class="form-control" formControlName="pharmacyPincode" name="ppincode" required>
+        </mat-form-field><br>
+        <mat-form-field class="form-group" class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput class="form-control" formControlName="phoneNumber" name="PhoneNumber" required>
+        </mat-form-field><br>
+        <mat-form-field class="form-group" class="full-width">
+            <mat-label>EmailId</mat-label>
+            <input matInput class="form-control" formControlName="emailId" name="emailId" required>
+        </mat-form-field><br>
+        <button mat-raised-button color="primary"> Submit </button>
+    </form>
+</div>

@@ -1,0 +1,70 @@
+<div mat-dialog-title>Update Profile</div>
+<div mat-dialog-content class="profile-details">
+
+  <form [formGroup]="dcProfile">
+      <mat-card-subtitle>
+        <h4>
+          Basic Details
+        </h4>
+        </mat-card-subtitle>
+    <div style="display: flex; flex-flow: row wrap; align-items: flex-start; width:
+      100%;">
+      <mat-form-field style="width: 100%;">
+        <input matInput formControlName="diagnosticCenterName" placeholder="Diagnostic Center Name">
+      </mat-form-field>
+
+    </div>
+    <div style="display: flex; flex-flow: row wrap; align-items: flex-start;">
+      <mat-form-field>
+        <input matInput formControlName="diagnosticCenterPhone" placeholder="Phone
+          Number">
+      </mat-form-field>
+    </div>
+    <div style="display: flex; flex-flow: row wrap; align-items: flex-start;">
+      <mat-form-field style="width: 100%;">
+        <input matInput formControlName="diagnosticCenterEmail" placeholder="Email">
+      </mat-form-field>
+    </div>
+    <div style="display: flex; flex-flow: row wrap; align-items: flex-start;">
+      <mat-form-field>
+        <input matInput formControlName="diagnosticCenterPhone" placeholder="Registration
+          Number">
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div class="profile-details">
+  <mat-card-subtitle>
+    <h4>
+      Communication Address
+    </h4>
+  </mat-card-subtitle>
+  <form [formGroup]="dcProfile">
+    <div>
+      <mat-form-field style="width: 100%;">
+        <textarea matInput formControlName="diagnosticCenterAddress" placeholder="Address
+          Line"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput formControlName="diagnosticCenterCity" placeholder="City">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input type= 'text' matInput formControlName="pincode" placeholder="Pincode" >
+      </mat-form-field>
+    </div>
+   
+  </form>
+</div>
+
+<div class="profile-options" mat-dialog-actions>
+  <button mat-stroked-button color="primary" (click)="goToManageSlots()"> Update
+    Time Slots </button>
+  <button mat-stroked-button color="primary" (click)="saveProfile()"> Save
+    Profile </button>
+</div>

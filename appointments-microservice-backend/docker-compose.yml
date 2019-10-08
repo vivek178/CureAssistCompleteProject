@@ -1,0 +1,16 @@
+version: "3.0"
+services:
+  appointment-microservice-backend:
+    image: teamcureassist/appointment-microservice-backend
+    build: .
+    ports:
+      - "5006:80"
+    depends_on:
+      - appointment-microservice-backend-db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      MongoConnectionString_db: "mongodb://mongodb:27017"
+  appointment-microservice-backend-db:
+    image: mvertes/alpine-mongo
+    ports:
+      - "27017:27017"

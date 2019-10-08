@@ -1,0 +1,72 @@
+image: mcr.microsoft.com/dotnet/core/sdk:2.2-alpine3.9
+stages:
+   - build
+   - test
+   - dockerize
+   - deploy
+
+build-stage:
+   stage: build
+   script:
+       - dotnet restore
+       - dotnet build
+       - dotnet publish
+   artifacts:
+       paths:
+           - ..\doctor-dc-backend\bin\Debug\netcoreapp2.2/publish
+   tags:
+       - immersive-cgi-w7-dotnet
+
+test-stage:
+   stage: test
+   script:
+      - dotnet test UnitTest/UnitTest.csproj
+   artifacts:
+       paths:
+           - ..\doctor-dc-backend\bin\Debug\netcoreapp2.2/publish
+   tags:
+       - immersive-cgi-w7-dotnet
+
+dockerize-stage:
+    stage: dockerize
+    image: docker
+    script:
+    - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+    - docker build -t teamcureassist/doctor-dc-portal-backend:${CI_COMMIT_SHORT_SHA} .
+    - docker tag teamcureassist/doctor-dc-portal-backend:${CI_COMMIT_SHORT_SHA} teamcureassist/doctor-dc-portal-backend:latest
+    - docker push teamcureassist/doctor-dc-portal-backend:${CI_COMMIT_SHORT_SHA}
+    - docker push teamcureassist/doctor-dc-portal-backend:latest
+    tags:
+    - immersive-cgi-w7-dotnet
+
+deploy:
+  stage: deploy
+  image: dtzar/helm-kubectl
+  script:
+    - kubectl config set-cluster k8s --server="${SERVER}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${CERTIFICATE_AUTHORITY_DATA}
+    - kubectl config set-credentials gitlab --token="${USER_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" kube-manifest.yaml
+    - kubectl -n ${NAMESPACE} apply -f kube-manifest.yaml
+  tags:
+    - immersive-cgi-w7-dotnet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   

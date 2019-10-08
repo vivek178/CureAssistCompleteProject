@@ -1,0 +1,171 @@
+swagger: "2.0"
+info:
+  description: "This is the API documentation for the prescription."
+  version: "1.0.0"
+  title: "prescription"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    
+basePath: "/v2"
+tags:
+- name: "prescription"
+  description: "All CRUD Operations on Doctors DB"
+schemes:
+- "https"
+- "http"
+
+paths:
+  /prescription:
+    post:
+      tags:
+      - "prescription"
+      summary: "Add a new prescription to the DB"
+      description: ""
+      operationId: "addprescription"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "A New precription is added to the DB from here"
+        required: true
+        schema:
+          $ref: "#/definitions/prescrption"
+      responses:
+        405:
+          description: "Invalid input"
+    get:
+      tags:
+      - "prescription"
+      summary: "Gets All prescriptions in the DataBase"
+      description: ""
+      operationId: "getprescriptions"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        404:
+          description: "No Resources Found"      
+  /prescription/{patientId}:
+    get:
+      tags:
+      - "prescription"
+      summary: "Get all prescriptions by patient-Id"
+      description: ""
+      operationId: "getPrescriptionByPatientId"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "patientId"
+        in: "path"
+        description: "prescriptions of a particular patient that needs to be fetched"
+        required: true
+        type: "string"
+      responses:
+        404:
+          description: "No prescription Found"
+  /{prescriptionId}:
+    get:
+      tags:
+      - "prescription"
+      summary: "Get prescription by prescriptionId"
+      description: ""
+      operationId: "getPrescriptionByPrescriptionId"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "prescriptionId"
+        in: "path"
+        description: "prescriptions of a particular patient that needs to be fetched"
+        required: true
+        type: "string"
+      responses:
+        404:
+          description: "No prescription Found"
+  /prescription/delete/{prescriptionid}:
+    delete:
+      tags:
+      - "prescription"
+      summary: "Deletes a prescription by prescription_id"
+      description: ""
+      operationId: "deleteprescription"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "prescriptionid"
+        in: "path"
+        description: "Prescription id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "ok"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Prescription not found"
+    
+
+
+definitions:
+
+  prescrption:
+    type: "object"
+    properties:
+      prescriptionid:
+        type: "string"
+      prescriptionDate:
+        type: "string"
+      patientid:
+        type: "string"
+      patientName:
+        type: "string"
+      patientPhoneNumber:
+        type: "string"
+      doctorName:
+        type: "string"
+      doctorPhoneNumber:
+        type: "string"
+      symptoms:
+        type: "string"
+      Remarks:
+        type: "string"
+      prescribedMedicines:
+        type: "array"
+        items:
+          $ref: '#/definitions/prescribedMedicines'
+    xml:
+      name: "prescription"
+      
+  prescribedMedicines:
+    type: "object"
+    properties:
+      medicineName:
+        type: "string"
+      prescribedDosage:
+        type: "string"
+      prescribedTiming:
+        type: "string"
+    xml:
+      name: "prescription"    
+      
+  
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

@@ -1,0 +1,30 @@
+﻿using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
+using doctor_dc_backend.Models;
+
+namespace doctor_dc_backend.DataAccessLayer
+{
+    public class DoctorDbContext
+    {
+        MongoClient mongoClient;
+        IMongoDatabase database;
+        public DoctorDbContext(IConfiguration config)
+        {
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                mongoClient = new MongoClient(Environment.GetEnvironmentVariable("MONGODB_HOST"));
+            }
+            else
+            {
+                mongoClient = new MongoClient(config.GetSection("MongoDB:server").Value);
+            }
+            database = mongoClient.GetDatabase(config.GetSection("MongoDB:database").Value);
+        }
+        public IMongoCollection<Doctor> Doctors => database.GetCollection<Doctor>("DoctorsDatabase");
+        // public IMongoCollection<DoctorTimeSlots> DoctorTimeSlots => database.GetCollection<DoctorTimeSlots>("DoctorTimeSlotsDatabase");
+    }
+}

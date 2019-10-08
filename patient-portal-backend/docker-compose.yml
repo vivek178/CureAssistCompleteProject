@@ -1,0 +1,24 @@
+version: '3'
+services:
+  patient-microservice-backend:
+    image: teamcureassist/patient-microservice-backend
+    build: .
+    ports:
+      - "5001:80"
+    depends_on:
+      - patient-microservice-backend-db
+    environment:
+      SQLSERVER: "server=db;database=DatabasePatient;User Id=sa;Password=Qwerty@123456;"
+      ASPNETCORE_ENVIRONMENT: Production
+  patient-microservice-backend-db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Qwerty@123456"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldb-vol:/var/opt/mssql
+volumes:
+   sqldb-vol:
+   

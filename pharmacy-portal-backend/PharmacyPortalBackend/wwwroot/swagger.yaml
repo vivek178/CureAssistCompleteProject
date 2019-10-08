@@ -1,0 +1,142 @@
+swagger: "2.0"
+info:
+  description: "This is pharmacy swagger doc"
+  version: "1.0.0"
+  title: "Pharmacy portal"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "pharmacy.swagger.io"
+basePath: "/v2"
+tags:
+- name: "pharmacies"
+  description: "Everything about your Pharmacy and medicines"
+  externalDocs:
+    description: "Find out more"
+    url: "http://pharmacy.cure-assist.io"
+- name: "pharmacy"
+  description: "Access to  medicine orders"
+- name: "pharmacist"
+  description: "Operations about pharmacist"
+  externalDocs:
+    description: "Find out more about our pharmacy"
+    url: "http://pharmacy.cure-assist.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /GET/Pharmacy/profile/EmailId:
+    get:
+       tags:
+         - pharmacy
+       summary: View profile
+       operationId: Retrieve_profile
+       consumes:
+         - application/json
+         - application/xml
+       produces:
+         - application/xml
+         - application/json
+       parameters:
+         - name: EmailId
+           in: header
+           required: true
+           type: string
+         - name: EmailId
+           in: path
+           description: EmailId to get
+           required: true
+           type: string
+       responses:
+         '200':
+           description: "Ok"
+         '400':
+           description: "Bad request"
+         '500':
+           description: "Internal server error"
+         '405':
+           description: "Invalid input"
+  /POST/pharmacy/profile:
+    post:
+      tags:
+      - "pharmacy"
+      summary: "Add a new pharmacy profile to the app"
+      description: ""
+      operationId: "addpharmacy"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Pharmacy object that needs to be added to the app"
+        required: true
+        schema:
+          $ref: "#/definitions/Pharmacy"
+      responses:
+         '200':
+           description: "Ok"
+         '400':
+           description: "Bad request"
+         '500':
+           description: "Internal server error"
+         '405':
+           description: "Invalid input"
+  /PUT/pharmacy/profile/EmailId:
+    put:
+      tags:
+      - "pharmacy"
+      summary: "Updated pharmacy profile"
+      description: "This can only be done by the logged in user."
+      operationId: "updateProfile"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "name that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/Pharmacy"
+      responses:
+         '200':
+           description: "Ok"
+         '400':
+           description: "Bad request"
+         '500':
+           description: "Internal server error"
+         '405':
+           description: "Invalid input"
+definitions:
+  Pharmacy:
+    type: "object"
+    properties:
+      pharmacyId:
+        type: "integer"
+        format: "int64"
+      pharmacyName:
+        type: "string"
+      pharmacy Register Number:
+        type: "string"
+      pharmacy location:
+        type: "string"
+      phone number:
+        type: "integer"
+        format: "int64"
+      emailId:
+        type: "string"
+    xml:
+      name: "Pharmacy"
+ 

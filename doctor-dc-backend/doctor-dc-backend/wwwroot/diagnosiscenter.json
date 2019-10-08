@@ -1,0 +1,290 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the API documentation for the Doctor Server and Diagnostic Server.",
+    "version": "1.0.0",
+    "title": "Swagger Doctors and Diagnosis Center",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "diagnosticcenter",
+      "description": "All CRUD Operations on Diagnosis Centers DB"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/diagnosiscenter": {
+      "post": {
+        "tags": [
+          "diagnosticcenter"
+        ],
+        "summary": "Add a new DiagnosticCenter to the DB",
+        "description": "",
+        "operationId": "addDiagnosticCenter",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A New Diagnostic center is added to the DB from here",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Dianostic-center"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "diagnosticcenter"
+        ],
+        "summary": "Get All the Diagnostic Centers in the Database",
+        "description": "",
+        "operationId": "getAllDiagnosisCenters",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "No Resource Found"
+          }
+        }
+      }
+    },
+    "/diagnosisCenter/{diagnosticCenterId}": {
+      "put": {
+        "tags": [
+          "diagnosticcenter"
+        ],
+        "summary": "Update a new DiagnosticCenter to the DB",
+        "description": "",
+        "operationId": "updateDiagnosticCenter",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "diagnosticCenterId",
+            "in": "path",
+            "description": "Update the Diagnosis Center based on the Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "diagnosticcenter"
+        ],
+        "summary": "Gets the Diagnostic Center with Id",
+        "description": "",
+        "operationId": "getDiagnosticCenterById",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "diagnosticCenterId",
+            "in": "path",
+            "description": "Get the Diagnosis Center based on the Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "diagnosticcenter"
+        ],
+        "summary": "Deletes the Diagnostic Center with Id",
+        "description": "",
+        "operationId": "deleteDiagnosticCenterById",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "diagnosticCenterId",
+            "in": "path",
+            "description": "Delete the Diagnosis Center based on the Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/diagnosticCenter/search": {
+      "get": {
+        "tags": [
+          "diagnosticcenter"
+        ],
+        "summary": "Get diagnosis center by name or tests conducted",
+        "description": "",
+        "operationId": "searchDiagnosticCenter",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "city",
+            "in": "formData",
+            "description": "City of the diagnostic Center",
+            "type": "string"
+          },
+          {
+            "name": "diagnosticCenterName",
+            "in": "formData",
+            "description": "name of the diagnostic Center",
+            "type": "string"
+          },
+          {
+            "name": "testsConducted",
+            "in": "formData",
+            "description": "name of the diagnostic Center",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "No Diagnosis Center Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Dianostic-center": {
+      "type": "object",
+      "properties": {
+        "diagnosticCenterId": {
+          "type": "string"
+        },
+        "dianosticCenterName": {
+          "type": "string"
+        },
+        "diagnosticCenterEmail": {
+          "type": "string"
+        },
+        "diagnosticCenterPhone": {
+          "type": "string"
+        },
+        "diagnosticCenterRegNum": {
+          "type": "string"
+        },
+        "diagnosticCenterCity": {
+          "type": "string"
+        },
+        "diagnosicCenterAddress": {
+          "type": "string"
+        },
+        "pincode": {
+          "type": "string"
+        },
+        "diagnosticCenterSlots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TimeSlot"
+          }
+        }
+      },
+      "xml": {
+        "name": "Diagnostic center"
+      }
+    },
+    "TimeSlot": {
+      "type": "object",
+      "properties": {
+        "slotId": {
+          "type": "string"
+        },
+        "testConductedInSlot": {
+          "type": "string"
+        },
+        "slotStartTime": {
+          "type": "string",
+          "description": "Date Time"
+        },
+        "slotEndTime": {
+          "type": "string",
+          "description": "Date Time"
+        },
+        "slotCapacity": {
+          "type": "integer",
+          "description": "No.of patients a diagnosis center can take in one slot"
+        }
+      },
+      "xml": {
+        "name": "Time Slot"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

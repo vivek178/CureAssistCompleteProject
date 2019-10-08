@@ -1,0 +1,165 @@
+swagger: "2.0"
+info:
+  description: "This is the API documentation for the TestReports Backend."
+  version: "1.0.0"
+  title: "APi Documentation for the TestReportsAPi"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+
+basePath: "/v2"
+tags:
+- name: "testreports"
+  description: "All CRUD Operations on Diagnosis Centers DB"
+schemes:
+- "https"
+- "http"
+
+paths:
+  /testreports:
+    get:
+      tags:
+      - "testreports"
+      summary: "Get All the Test Reports in the Database"
+      description: ""
+      operationId: "GetAllTestReports || GetTestReportByDiagnosticCenterId"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Bad Request/Not Found"
+    post:
+      tags:
+      - "testreports"
+      summary: "Add a new Test Report to the Database"
+      description: ""
+      operationId: "AddTestReport"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "A new Test Report document is added to the db"
+        required: true
+        schema:
+          $ref: "#/definitions/TestReport"
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Invalid Input/Method Not Allowed"
+  /testreports/{id}:
+    get:
+      tags:
+      - "testreports"
+      summary: "Gets testreport based on Id. If id is testReportId, returns one single Test Report. If it's patient Id or diagnostic Center Id, returns a list of test reports"
+      operationId: "GetTestReportById || GetTestReportByPatientId"
+      description: ""
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "string"
+        description: ""
+        required: true
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Not Found"
+    delete:
+      tags:
+      - "testreports"
+      summary: "Delete a Test Report from the Database" 
+      description: ""
+      operationId: "DeleteTestReport"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "string"
+        description: ""
+        required: true
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Bad Request / Not Found"
+  /testreports/upload:
+    post:
+      tags:
+        - "testreports"
+      summary: "Upload a new Test Report to the Database"
+      description: ""
+      operationId: "UploadTestReport"
+      description: ""
+      consumes:
+      - "multipart/form-data"
+      parameters:
+      - in: "formData"
+        name: "file"
+        description: "File is uploaded into the static files folder"
+        type: "file"
+        required: true
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Invalid Input/Method Not Allowed"
+  /testreports/uploads/{filename}:
+    get:
+      tags:
+      - "testreports"
+      summary: "To see the uploaded file"
+      description: ""
+      operationId: "SeeTestReport"
+      produces:
+      - "multipart/form-data"
+      parameters:
+      - in: "path"
+        name: "filename"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Not Found"
+        
+    
+
+definitions:
+  TestReport:
+    type: "object"
+    properties:
+      testReportId:
+        type: "string"
+      testConductedDate:
+        type: "string"
+      testName:
+        type: "string"
+      patientId:
+        type: "string"
+      patientName:
+        type: "string"
+      patientPhone:
+        type: "string"
+      diagnosticCenterId:
+        type: "string"
+      diagnosticCenterName:
+        type: "string"
+      diagnosticCenterPhone:
+        type: "string"
+      fileUrl:
+        type: "string"
+    xml:
+      name: "TestReport"    
+    
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

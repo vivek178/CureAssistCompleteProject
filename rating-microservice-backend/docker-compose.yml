@@ -1,0 +1,19 @@
+version: '3'
+services:
+  rating-microservice-backend:
+    image: teamcureassist/rating-microservice-backend
+    build: .
+    ports:
+      - "5007:80"
+    depends_on:
+      - rating-microservice-backend-db
+    environment:
+      SQLSERVER: "server=rating-microservice-backend-db;database=RatingDatabase;User Id=sa;Password=Qwerty@123456;"
+      ASPNETCORE_ENVIRONMENT: Production
+  rating-microservice-backend-db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Qwerty@123456"
+    ports:
+      - "1433:1433"

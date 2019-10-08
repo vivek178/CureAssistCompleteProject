@@ -1,0 +1,150 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+        convert -f docker-compose.yml -o kube-manifest.yaml
+      kompose.version: 1.18.0 (06a2e56)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: patient-microservice-backend-db
+    name: patient-microservice-backend-db
+  spec:
+    type: ClusterIP
+    ports:
+    - name: "1433"
+      port: 1433
+      targetPort: 1433
+    selector:
+      io.kompose.service: patient-microservice-backend-db
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+        convert -f docker-compose.yml -o kube-manifest.yaml
+      kompose.version: 1.18.0 (06a2e56)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: patient-microservice-backend
+    name: patient-microservice-backend
+  spec:
+    type: NodePort
+    ports:
+    - name: "5001"
+      port: 5001
+      targetPort: 80
+    selector:
+      io.kompose.service: patient-microservice-backend
+  status:
+    loadBalancer: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+        convert -f docker-compose.yml -o kube-manifest.yaml
+      kompose.version: 1.18.0 (06a2e56)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: patient-microservice-backend-db
+    name: patient-microservice-backend-db
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: patient-microservice-backend-db
+      spec:
+        containers:
+        - env:
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: SA_PASSWORD
+            value: Qwerty@123456
+          image: mcr.microsoft.com/mssql/server
+          name: patient-microservice-backend-db
+          ports:
+          - containerPort: 1433
+          resources: {}
+          volumeMounts:
+          - mountPath: /var/opt/mssql
+            name: sqldb-vol
+        restartPolicy: Always
+        volumes:
+        - name: sqldb-vol
+          persistentVolumeClaim:
+            claimName: sqldb-vol
+  status: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: sqldb-vol
+    name: sqldb-vol
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+        convert -f docker-compose.yml -o kube-manifest.yaml
+      kompose.version: 1.18.0 (06a2e56)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: patient-microservice-backend
+    name: patient-microservice-backend
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: patient-microservice-backend
+      spec:
+        containers:
+        - env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Production
+          - name: SQLSERVER
+            value: server=patient-microservice-backend-db;database=DatabasePatient;User Id=sa;Password=Qwerty@123456;
+          image: teamcureassist/patient-microservice-backend:<VERSION>
+          name: patient-microservice-backend
+          ports:
+          - containerPort: 80
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    name: patient-backend-portal-ingress
+    annotations:
+     nginx.ingress.kubernetes.io/rewrite-target: /
+  spec:
+    rules:
+    - host: patient-api.cureassist.cgi-wave7.stackroute.io
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: patient-microservice-backend
+            servicePort: 80
+kind: List
+metadata: {}
+
